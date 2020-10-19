@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Movie;
 use App\Http\Requests\CreateMovieRequest;
+use App\Http\Requests\UpdateMovieRequest;
+
 
 class MoviesController extends Controller
 {
@@ -65,9 +67,11 @@ class MoviesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateMovieRequest $request, $id)
     {
         //
+        $movie = Movie::findOrFail($id); 
+        $movie->update($request->validated());
     }
 
     /**
@@ -78,6 +82,8 @@ class MoviesController extends Controller
      */
     public function destroy($id)
     {
+        Movie::findOrFail($id)->delete(); 
+        
         //
     }
 }
